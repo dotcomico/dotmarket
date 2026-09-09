@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend-py
+    ports:
+      - "3000:3000"
+    environment:
+      - JWT_SECRET=my_secret_key_123
+      - PORT=3000
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
