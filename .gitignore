@@ -1,3 +1,6 @@
 frontend/
 backend-py/
 .vscode/
+
+# Internal working docs (not published)
+SCREENSHOTS_PLAYBOOK.md
