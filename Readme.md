@@ -15,13 +15,19 @@
 
 ![Dotmarket storefront home page, logged in — search bar, cart badge showing 4 items, a category tile grid, and a product grid of real named products with photography, descriptions, and prices, with inline quantity steppers on items already in the cart](media/screenshots/hero-storefront.png)
 
-| Admin Dashboard | Category Browsing |
+| Admin Dashboard | Cart → Checkout |
 |---|---|
-| ![Dotmarket admin dashboard — Total Revenue, Total Orders, a triggered Low Stock Alert of 7 items, Total Products at 84, a Recent Orders table spanning five different customers, and a Low Stock Alert panel listing the specific out-of-stock and low-stock products](media/screenshots/admin-dashboard.png) | ![Fruits & Vegetables category page with breadcrumb, category icon and title, a "Shop by Category" row of subcategories proving the category tree, and a full grid of products](media/screenshots/products-browse.png) |
+| ![Dotmarket admin dashboard — Total Revenue, Total Orders, a triggered Low Stock Alert of 7 items, Total Products at 84, a Recent Orders table spanning five different customers, and a Low Stock Alert panel listing the specific out-of-stock and low-stock products](media/screenshots/admin-dashboard.png) | ![Animated walkthrough: adding Coffee Beans to the cart from its product page, the cart view with a free-shipping progress bar, filling in checkout shipping details, and reaching the order confirmation screen](media/screenshots/cart-checkout.gif) |
+
+| Admin Product Editing | Category Browsing |
+|---|---|
+| ![Animated walkthrough: opening the Edit Product modal for Apple in the admin Product Management table, changing its price, saving, and seeing the updated price reflected in the table](media/screenshots/admin-product-crud.gif) | ![Fruits & Vegetables category page with breadcrumb, category icon and title, a "Shop by Category" row of subcategories proving the category tree, and a full grid of products](media/screenshots/products-browse.png) |
+
+**🔄 Every one of the 84 products has a real 360° spin, not just a photo:**
+
+![Animated 360° spin of the Horizon Smart Hub & Speaker after toggling from Photo to 360° View on the product page](media/screenshots/product-360-spin.gif)
 
 ![Dotmarket on a 390px-wide phone: the storefront home screen, a product detail page with the Photo/360° toggle, and the cart with an order summary and free-shipping progress bar](media/screenshots/responsive-strip.png)
-
-> Cart → checkout, admin product editing, and the 360° product spin are motion — GIFs for those are recorded separately and will be added here next.
 
 ---
 
