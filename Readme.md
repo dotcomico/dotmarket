@@ -13,15 +13,15 @@
 
 ## 📸 Preview
 
-> _Screenshots/GIFs coming soon — placeholders below, swap in real captures as the app is polished._
+![Dotmarket storefront home page, logged in — search bar, cart badge showing 4 items, a category tile grid, and a product grid of real named products with photography, descriptions, and prices, with inline quantity steppers on items already in the cart](media/screenshots/hero-storefront.png)
 
-| Customer Storefront | Admin Dashboard |
+| Admin Dashboard | Category Browsing |
 |---|---|
-| ![Storefront placeholder](https://placehold.co/600x360?text=Storefront+Screenshot) | ![Admin dashboard placeholder](https://placehold.co/600x360?text=Admin+Dashboard+Screenshot) |
+| ![Dotmarket admin dashboard — Total Revenue, Total Orders, a triggered Low Stock Alert of 7 items, Total Products at 84, a Recent Orders table spanning five different customers, and a Low Stock Alert panel listing the specific out-of-stock and low-stock products](media/screenshots/admin-dashboard.png) | ![Fruits & Vegetables category page with breadcrumb, category icon and title, a "Shop by Category" row of subcategories proving the category tree, and a full grid of products](media/screenshots/products-browse.png) |
 
-| Cart & Checkout | Product Management |
-|---|---|
-| ![Checkout placeholder](https://placehold.co/600x360?text=Checkout+Flow+GIF) | ![Product management placeholder](https://placehold.co/600x360?text=Product+CRUD+GIF) |
+![Dotmarket on a 390px-wide phone: the storefront home screen, a product detail page with the Photo/360° toggle, and the cart with an order summary and free-shipping progress bar](media/screenshots/responsive-strip.png)
+
+> Cart → checkout, admin product editing, and the 360° product spin are motion — GIFs for those are recorded separately and will be added here next.
 
 ---
 
@@ -36,6 +36,7 @@ Dotmarket simulates a real supermarket's online storefront alongside the interna
 
 **Customer**
 - Browse & search products across a full category tree
+- 🔄 **360° product viewer** — every one of the 84 seeded products ships a real spin GIF, toggled from a Photo/360° switch on the product page
 - Cart & checkout flow
 - Order history & profile management
 
