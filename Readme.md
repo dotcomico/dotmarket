@@ -13,21 +13,52 @@
 
 ## 📸 Preview
 
-![Dotmarket storefront home page, logged in — search bar, cart badge showing 4 items, a category tile grid, and a product grid of real named products with photography, descriptions, and prices, with inline quantity steppers on items already in the cart](media/screenshots/hero-storefront.png)
+<p align="center">
+  <img src="media/screenshots/hero-storefront.png" width="850" alt="Dotmarket storefront home page, logged in — search bar, cart badge showing 4 items, a category tile grid, and a product grid of real named products with photography, descriptions, and prices, with inline quantity steppers on items already in the cart">
+  <br><sub><b>Storefront</b> — home page, logged in</sub>
+</p>
 
-| Admin Dashboard | Cart → Checkout |
-|---|---|
-| ![Dotmarket admin dashboard — Total Revenue, Total Orders, a triggered Low Stock Alert of 7 items, Total Products at 84, a Recent Orders table spanning five different customers, and a Low Stock Alert panel listing the specific out-of-stock and low-stock products](media/screenshots/admin-dashboard.png) | ![Animated walkthrough: adding Coffee Beans to the cart from its product page, the cart view with a free-shipping progress bar, filling in checkout shipping details, and reaching the order confirmation screen](media/screenshots/cart-checkout.gif) |
+**Storefront & admin, side by side:**
 
-| Admin Product Editing | Category Browsing |
-|---|---|
-| ![Animated walkthrough: opening the Edit Product modal for Apple in the admin Product Management table, changing its price, saving, and seeing the updated price reflected in the table](media/screenshots/admin-product-crud.gif) | ![Fruits & Vegetables category page with breadcrumb, category icon and title, a "Shop by Category" row of subcategories proving the category tree, and a full grid of products](media/screenshots/products-browse.png) |
+<table>
+<tr>
+<td width="50%">
+<img src="media/screenshots/products-browse.png" width="100%" alt="Fruits & Vegetables category page with breadcrumb, category icon and title, a Shop by Category row of subcategories proving the category tree, and a full grid of products">
+<sub><b>Category browsing</b> — breadcrumb + subcategory tree</sub>
+</td>
+<td width="50%">
+<img src="media/screenshots/admin-dashboard.png" width="100%" alt="Dotmarket admin dashboard — Total Revenue, Total Orders, a triggered Low Stock Alert of 7 items, Total Products at 84, a Recent Orders table spanning five different customers, and a Low Stock Alert panel listing the specific out-of-stock and low-stock products">
+<sub><b>Admin dashboard</b> — live stats + low-stock alerts</sub>
+</td>
+</tr>
+</table>
+
+**See it in action:**
+
+<p align="center">
+  <img src="media/screenshots/cart-checkout.gif" width="700" alt="Animated walkthrough: adding Coffee Beans to the cart from its product page, the cart view with a free-shipping progress bar, filling in checkout shipping details, and reaching the order confirmation screen">
+  <br><sub><b>Cart → checkout</b> — add to cart, free-shipping progress, order confirmation</sub>
+</p>
+
+<p align="center">
+  <img src="media/screenshots/admin-product-crud.gif" width="700" alt="Animated walkthrough: opening the Edit Product modal for Apple in the admin Product Management table, changing its price, saving, and seeing the updated price reflected in the table">
+  <br><sub><b>Admin product editing</b> — inline CRUD from the Product Management table</sub>
+</p>
 
 **🔄 Every one of the 84 products has a real 360° spin, not just a photo:**
 
-![Animated 360° spin of the Horizon Smart Hub & Speaker after toggling from Photo to 360° View on the product page](media/screenshots/product-360-spin.gif)
+<p align="center">
+  <img src="media/screenshots/product-360-spin.gif" width="700" alt="Animated 360° spin of the Horizon Smart Hub & Speaker after toggling from Photo to 360° View on the product page">
+  <br><sub><b>360° product viewer</b> — Photo / 360° toggle on the product page</sub>
+</p>
 
-![Dotmarket on a 390px-wide phone: the storefront home screen, a product detail page with the Photo/360° toggle, and the cart with an order summary and free-shipping progress bar](media/screenshots/responsive-strip.png)
+<details>
+<summary><b>📱 Responsive — view on mobile</b></summary>
+<br>
+<p align="center">
+  <img src="media/screenshots/responsive-strip.png" width="850" alt="Dotmarket on a 390px-wide phone: the storefront home screen, a product detail page with the Photo/360° toggle, and the cart with an order summary and free-shipping progress bar">
+</p>
+</details>
 
 ---
 
