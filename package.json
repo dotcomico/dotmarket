@@ -1,0 +1,30 @@
+{
+  "name": "supermarket",
+  "version": "1.0.0",
+  "description": "**A full-stack supermarket e-commerce app** — customer shopping experience + a complete admin/manager back office, built to demonstrate production-style architecture across a decoupled frontend and backend.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dotcomico/dotmarket.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/dotcomico/dotmarket/issues"
+  },
+  "homepage": "https://github.com/dotcomico/dotmarket#readme",
+  "devDependencies": {
+    "playwright": "^1.63.0",
+    "sharp": "^0.35.4",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}
