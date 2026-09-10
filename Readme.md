@@ -83,21 +83,37 @@ Dotmarket simulates a real supermarket's online storefront alongside the interna
 - Order status management
 - User role management
 
+## 🔐 Engineering Highlights
+
+`RBAC` `JWT Auth` `bcrypt` `Rate Limiting` `Layered Architecture` `Centralized Error Handling` `Zustand`
+
+<details>
+<summary>What's behind these tags</summary>
+
+- **Role-based access control** — a custom `@checkRole` decorator guards admin/manager-only routes (products, categories, orders, users) on top of JWT identity, instead of checking roles ad-hoc in each handler
+- **Password security** — bcrypt with salted hashing (never plaintext or reversible encryption) for stored credentials
+- **Rate limiting** — Flask-Limiter on the API to blunt brute-force and abuse, not just a demo without production guardrails
+- **Layered backend architecture** — routes → services → models, with a shared validators module, so business logic isn't stuck in route handlers and is easy to unit test
+- **Centralized error handling** — a single Flask error handler normalizes exceptions into consistent JSON error responses instead of leaking stack traces or inconsistent shapes per route
+- **Client state via Zustand** — separate, focused stores (auth, cart, orders, products, categories) instead of one global blob or prop-drilling
+
+</details>
+
 ## 🏗️ Architecture
 
 Frontend and backend are **separate repositories and separately deployable services**, communicating over a REST API — not a single monolith:
 
 ```mermaid
 flowchart LR
-    U["Customer / Admin Browser"] -->|HTTPS| FE["dotmarket-frontend\nReact 19 + TypeScript + Vite"]
-    FE -->|REST API + JWT| BE["dotmarket-backend\nFlask + SQLAlchemy"]
+    U["Customer / Admin Browser"] -->|HTTPS| FE["dotmarket-client\nReact 19 + TypeScript + Vite"]
+    FE -->|REST API + JWT| BE["dotmarket-server\nFlask + SQLAlchemy"]
     BE --> DB[("SQLite")]
 ```
 
 | Repo | Role |
 |---|---|
-| [`dotmarket-frontend`](https://github.com/dotcomico/dotmarket-frontend) | Customer + admin UI |
-| [`dotmarket-backend`](https://github.com/dotcomico/dotmarket-backend) | REST API, auth, business logic, database |
+| [`dotmarket-client`](https://github.com/dotcomico/dotmarket-client) | Customer + admin UI |
+| [`dotmarket-server`](https://github.com/dotcomico/dotmarket-server) | REST API, auth, business logic, database |
 
 ## 🛠️ Tech Stack
 
@@ -116,8 +132,8 @@ flowchart LR
 
 ## 🔗 Links
 
-- Frontend repo: https://github.com/dotcomico/dotmarket-frontend
-- Backend repo: https://github.com/dotcomico/dotmarket-backend
+- Frontend repo: https://github.com/dotcomico/dotmarket-client
+- Backend repo: https://github.com/dotcomico/dotmarket-server
 - Live demo: _coming soon_
 
 ## 📄 License
