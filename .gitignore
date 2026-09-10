@@ -1,9 +1,13 @@
 frontend/
-backend-py/
+backend/
 .vscode/
+
+# Standalone repo of its own — not part of this workspace
+mcp-server/
 
 # Internal working docs (not published)
 SCREENSHOTS_PLAYBOOK.md
+CLAUDE.md
 
 # Capture tooling — local-only, no one else needs it; captured output in
 # media/screenshots/ is still tracked
