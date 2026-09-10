@@ -4,3 +4,8 @@ backend-py/
 
 # Internal working docs (not published)
 SCREENSHOTS_PLAYBOOK.md
+
+# Capture tooling — local-only, no one else needs it; captured output in
+# media/screenshots/ is still tracked
+node_modules/
+scripts/
