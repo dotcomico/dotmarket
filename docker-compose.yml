@@ -9,6 +9,8 @@ services:
 
   ollama:
     image: ollama/ollama:latest
+    environment:
+      - OLLAMA_CONTEXT_LENGTH=16384
     volumes:
       - ollama-data:/root/.ollama
 
