@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build: ./backend
@@ -9,9 +7,49 @@ services:
       - JWT_SECRET=my_secret_key_123
       - PORT=3000
 
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-data:/root/.ollama
+
+  ollama-init:
+    image: ollama/ollama:latest
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    entrypoint: ["sh", "-c", "until ollama list >/dev/null 2>&1; do sleep 1; done; ollama pull qwen2.5:7b"]
+
+  mcp-server:
+    build: ./mcp-server
+    environment:
+      - MCP_HOST=0.0.0.0
+      - MCP_PORT=8000
+      - BACKEND_API_URL=http://backend:3000
+    depends_on:
+      - backend
+
+  ai-server:
+    build: ./ai-server
+    environment:
+      - AI_SERVER_PORT=8100
+      - LLM_BASE_URL=http://ollama:11434/v1
+      - OPENAI_API_KEY=ollama
+      - OPENAI_MODEL=qwen2.5:7b
+      - MCP_SERVER_URL=http://mcp-server:8000/mcp
+    depends_on:
+      mcp-server:
+        condition: service_started
+      ollama-init:
+        condition: service_completed_successfully
+
   frontend:
     build: ./frontend
     ports:
       - "80:80"
     depends_on:
       - backend
+      - ai-server
+
+volumes:
+  ollama-data:
