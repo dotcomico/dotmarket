@@ -68,6 +68,7 @@ Dotmarket simulates a real supermarket's online storefront alongside the interna
 
 - **Customers** browse categorized products, search, manage a cart, check out, and view order history.
 - **Admins & managers** get a dashboard with live stats and low-stock alerts, full CRUD over products/categories, order status control, and user role management.
+- An optional **AI chat assistant** (`dotmarket-ai-server` + `dotmarket-mcp-server`) answers product/category questions grounded in the real backend data, via an LLM tool-calling loop over MCP — see [Quick Start](docs/QUICK_START.md) to run it alongside the storefront.
 
 ## ✨ Key Features
 
@@ -101,19 +102,24 @@ Dotmarket simulates a real supermarket's online storefront alongside the interna
 
 ## 🏗️ Architecture
 
-Frontend and backend are **separate repositories and separately deployable services**, communicating over a REST API — not a single monolith:
+Four independently deployable, separately-git-tracked services, communicating over HTTP — not a single monolith. The AI chat assistant (`dotmarket-ai-server` + `dotmarket-mcp-server`) is an optional add-on layered on top of the same backend the storefront uses:
 
 ```mermaid
 flowchart LR
     U["Customer / Admin Browser"] -->|HTTPS| FE["dotmarket-client\nReact 19 + TypeScript + Vite"]
     FE -->|REST API + JWT| BE["dotmarket-server\nFlask + SQLAlchemy"]
     BE --> DB[("SQLite")]
+    FE -.->|chat widget, optional| AI["dotmarket-ai-server\nFastAPI + LLM tool-calling loop"]
+    AI -->|MCP protocol| MCP["dotmarket-mcp-server\nMCP tools over the backend REST API"]
+    MCP -->|REST API| BE
 ```
 
 | Repo | Role |
 |---|---|
 | [`dotmarket-client`](https://github.com/dotcomico/dotmarket-client) | Customer + admin UI |
 | [`dotmarket-server`](https://github.com/dotcomico/dotmarket-server) | REST API, auth, business logic, database |
+| [`dotmarket-mcp-server`](https://github.com/dotcomico/dotmarket-mcp-server) | Exposes the backend as MCP tools (read-only product/category lookups so far) |
+| [`dotmarket-ai-server`](https://github.com/dotcomico/dotmarket-ai-server) | Chatbot/agent service — LLM tool-calling loop on top of `dotmarket-mcp-server` |
 
 ## 🛠️ Tech Stack
 
@@ -134,6 +140,8 @@ flowchart LR
 
 - Frontend repo: https://github.com/dotcomico/dotmarket-client
 - Backend repo: https://github.com/dotcomico/dotmarket-server
+- MCP server repo: https://github.com/dotcomico/dotmarket-mcp-server
+- AI server repo: https://github.com/dotcomico/dotmarket-ai-server
 - Live demo: _coming soon_
 
 ## 📄 License

@@ -36,13 +36,13 @@ Test accounts (all passwords: `Test123!`):
 
 ```bash
 # 1. Clone repositories
-git clone https://github.com/dotcomico/dotmarket-backend.git
-git clone https://github.com/dotcomico/dotmarket-frontend.git
+git clone https://github.com/dotcomico/dotmarket-server.git backend
+git clone https://github.com/dotcomico/dotmarket-client.git frontend
 ```
 
 ```bash
 # 2. Backend
-cd dotmarket-backend
+cd backend
 python -m venv venv
 source venv/bin/activate     # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -58,7 +58,7 @@ python -m src.main
 
 ```bash
 # 3. Frontend (in new terminal)
-cd ../dotmarket-frontend
+cd ../frontend
 npm install
 npm run dev
 # → http://localhost:5173
@@ -66,13 +66,16 @@ npm run dev
 
 Frontend expects backend at `http://localhost:3000`
 
+This covers the storefront + admin app. To also run the optional AI chat
+assistant, see [Optional: AI Chat Assistant](#optional-ai-chat-assistant-mcp-server--ai-server) below.
+
 ## Daily Dev (Already Set Up)
 
 The steps above are for a **fresh clone/fork** (they create the venv, install deps from scratch). If `venv` (backend) and `node_modules` (frontend) already exist on your machine, skip straight to:
 
 ```bash
 # Terminal 1 — Backend
-cd backend-py
+cd backend
 venv\Scripts\activate     # macOS/Linux: source venv/bin/activate
 python -m src.main
 # → http://localhost:3000
@@ -90,7 +93,7 @@ Re-run `pip install -r requirements.txt` / `npm install` only if dependencies ch
 ## Reset & Re-seed Database
 
 ```bash
-cd backend-py
+cd backend
 rm database.sqlite
 python seed_database.py
 ```
@@ -99,6 +102,58 @@ Includes:
 - 60 categories (12 parents + subcategories)
 - 62 products (some low/out-of-stock for testing)
 - 5 realistic orders in different states
+
+## Optional: AI Chat Assistant (mcp-server + ai-server)
+
+Two more services, on top of the backend already running above, power an
+optional chat widget that answers product/category questions grounded in
+real backend data: `mcp-server` exposes the backend as MCP tools, and
+`ai-server` runs the LLM tool-calling loop and exposes an HTTP `/chat`
+endpoint. Full details (architecture, tool list, env vars) are in each
+service's own README — this is the fast path to get all four services up
+together.
+
+```bash
+# 1. Clone (if not already present as siblings of backend/ and frontend/)
+git clone https://github.com/dotcomico/dotmarket-mcp-server.git mcp-server
+git clone https://github.com/dotcomico/dotmarket-ai-server.git ai-server
+```
+
+```bash
+# 2. mcp-server (needs backend already running — see above)
+cd mcp-server
+python -m venv venv
+venv\Scripts\activate        # macOS/Linux: source venv/bin/activate
+pip install -r requirements.txt
+copy .env.example .env       # defaults to http://localhost:3000 for the backend
+python -m src.server
+# → listens on http://127.0.0.1:8000/mcp
+```
+
+```bash
+# 3. ai-server (needs mcp-server already running)
+cd ../ai-server
+python -m venv venv
+venv\Scripts\activate        # macOS/Linux: source venv/bin/activate
+pip install -r requirements.txt
+copy .env.example .env       # set OPENAI_API_KEY, or point LLM_BASE_URL at a
+                              # local Ollama server for free local dev
+uvicorn src.api:app --port 8100 --reload
+# → http://127.0.0.1:8100
+```
+
+```bash
+# 4. Test it end-to-end
+curl -X POST http://127.0.0.1:8100/chat \
+  -H "Content-Type: application/json" \
+  -d "{\"message\": \"What products do you have under $5?\"}"
+# → {"reply": "..."} grounded in real seeded product data
+```
+
+Run order matters: backend → mcp-server → ai-server. Each step's README
+(`mcp-server/README.md`, `ai-server/README.md`) also covers manual testing
+with the MCP Inspector and Claude Desktop, which is worth doing before
+wiring the chat widget into the frontend.
 
 ## Environment Variables (backend)
 

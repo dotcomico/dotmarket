@@ -2,8 +2,9 @@ frontend/
 backend/
 .vscode/
 
-# Standalone repo of its own — not part of this workspace
+# Standalone repos of their own — not part of this workspace
 mcp-server/
+ai-server/
 
 # Internal working docs (not published)
 SCREENSHOTS_PLAYBOOK.md
