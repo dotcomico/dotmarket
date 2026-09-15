@@ -30,6 +30,28 @@ docker-compose exec <service_name> sh    # or bash
 docker ps
 ```
 
+## GPU Acceleration for the AI Chat Assistant (optional)
+
+By default the `ollama` service runs CPU-only — this is deliberate, so
+`docker-compose up` works out of the box for anyone who pulls the images,
+regardless of their hardware. CPU inference is noticeably slower (expect
+several seconds to tens of seconds per chat response instead of ~1s), which
+is normal and not a bug.
+
+If you have an NVIDIA GPU with the
+[NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+installed, layer the optional override file on top to pass the GPU through
+to Ollama:
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
+```
+
+Don't add the GPU block to the base `docker-compose.yml` — on a machine
+without the NVIDIA Container Toolkit, that reservation makes the `ollama`
+container fail to start at all, breaking the default CPU path for everyone
+else. Keep it in `docker-compose.gpu.yml` and opt in per-machine.
+
 ## Publishing Images — Important Notes
 
 - You **must** be logged in → run `docker login` before any `docker push`

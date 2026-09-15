@@ -24,6 +24,42 @@ Test accounts (all passwords: `Test123!`):
 | Manager  | manager@test.com     |
 | Customer | customer@test.com    |
 
+## Full Stack via Docker Compose (backend + frontend + AI chat)
+
+The two `docker run` commands above only cover backend + frontend. To also
+run the AI chat assistant (mcp-server + ai-server + a local Ollama model),
+use the `docker-compose.yml` at the repo root instead — it builds and wires
+up all five services (backend, frontend, mcp-server, ai-server, ollama) in
+one command.
+
+**No NVIDIA GPU (or not sure) — works on any machine:**
+
+```bash
+docker-compose up -d
+```
+
+Ollama runs CPU-only in this mode. Chat responses still work, just slower
+(several seconds to tens of seconds per reply instead of ~1s) — this is
+expected, not a bug.
+
+**Have an NVIDIA GPU** (with the
+[NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+installed):
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
+```
+
+Same stack, but Ollama gets GPU passthrough for much faster chat responses.
+See [Docker Publishing Guide](DOCKER_PUBLISHING.md#gpu-acceleration-for-the-ai-chat-assistant-optional)
+for why this is a separate opt-in file rather than the default.
+
+Either way: open http://localhost, and stop everything with:
+
+```bash
+docker-compose down
+```
+
 ## Local Development
 
 ### Prerequisites
