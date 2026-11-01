@@ -1,10 +1,11 @@
 services:
   backend:
+    image: dotcoms/supermarket-backend:latest
     build: ./backend
     ports:
       - "3000:3000"
     environment:
-      - JWT_SECRET=my_secret_key_123
+      - JWT_SECRET=${JWT_SECRET:?Set JWT_SECRET in .env - see .env.example}
       - PORT=3000
 
   ollama:
@@ -23,6 +24,7 @@ services:
     entrypoint: ["sh", "-c", "until ollama list >/dev/null 2>&1; do sleep 1; done; ollama pull qwen2.5:7b"]
 
   mcp-server:
+    image: dotcoms/supermarket-mcp-server:latest
     build: ./mcp-server
     environment:
       - MCP_HOST=0.0.0.0
@@ -32,6 +34,7 @@ services:
       - backend
 
   ai-server:
+    image: dotcoms/supermarket-ai-server:latest
     build: ./ai-server
     environment:
       - AI_SERVER_PORT=8100
@@ -46,6 +49,7 @@ services:
         condition: service_completed_successfully
 
   frontend:
+    image: dotcoms/supermarket-frontend:latest
     build: ./frontend
     ports:
       - "80:80"

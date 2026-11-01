@@ -2,14 +2,21 @@
 
 ## Fastest Way (Docker)
 
-```bash
-# 1. Start backend (port 3000)
-docker pull dotcoms/supermarket-backend:latest
-docker run -d -p 3000:3000 dotcoms/supermarket-backend:latest
+Runs the full app, including the AI chat assistant, from the published images.
+You only need Docker and this repo. The first start downloads the chat model
+(about 4.7 GB).
 
-# 2. Start frontend (port 80)
-docker pull dotcoms/supermarket-frontend:latest
-docker run -d -p 80:80 dotcoms/supermarket-frontend:latest
+```bash
+git clone https://github.com/dotcomico/dotmarket.git
+cd dotmarket
+cp .env.example .env
+```
+
+Set `JWT_SECRET` in `.env`, then:
+
+```bash
+docker compose pull
+docker compose up -d --no-build
 ```
 
 → Open http://localhost
@@ -24,21 +31,7 @@ Test accounts (all passwords: `Test123!`):
 | Manager  | manager@test.com     |
 | Customer | customer@test.com    |
 
-## Full Stack via Docker Compose (backend + frontend + AI chat)
-
-The two `docker run` commands above only cover backend + frontend. To also
-run the AI chat assistant (mcp-server + ai-server + a local Ollama model),
-use the `docker-compose.yml` at the repo root instead — it builds and wires
-up all five services (backend, frontend, mcp-server, ai-server, ollama) in
-one command.
-
-**No NVIDIA GPU (or not sure) — works on any machine:**
-
-```bash
-docker-compose up -d
-```
-
-Ollama runs CPU-only in this mode. Chat responses still work, just slower
+Ollama runs CPU-only by default. Chat responses still work, just slower
 (several seconds to tens of seconds per reply instead of ~1s) — this is
 expected, not a bug.
 
@@ -47,17 +40,26 @@ expected, not a bug.
 installed):
 
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.gpu.yml up -d
+docker compose -f docker-compose.yml -f docker-compose.gpu.yml up -d --no-build
 ```
 
 Same stack, but Ollama gets GPU passthrough for much faster chat responses.
 See [Docker Publishing Guide](DOCKER_PUBLISHING.md#gpu-acceleration-for-the-ai-chat-assistant-optional)
 for why this is a separate opt-in file rather than the default.
 
-Either way: open http://localhost, and stop everything with:
+Stop everything with:
 
 ```bash
-docker-compose down
+docker compose down
+```
+
+## Build the Docker Images from Source
+
+With `backend/`, `frontend/`, `mcp-server/` and `ai-server/` cloned into this
+folder, and `.env` set up as above:
+
+```bash
+docker compose up -d --build
 ```
 
 ## Local Development
@@ -198,6 +200,7 @@ wiring the chat widget into the frontend.
 | `PORT`       | Server port                  | no        | 3000       |
 | `JWT_SECRET` | Secret for signing tokens    | **yes**   | —          |
 | `DB_STORAGE` | SQLite file path             | no        | `./database.sqlite` |
+| `RATE_LIMIT` | Requests allowed per client  | no        | `1000 per 15 minutes` in Docker; otherwise set by `NODE_ENV` |
 
 ## Test Credentials
 
