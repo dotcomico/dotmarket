@@ -5,6 +5,10 @@ Notes for building, running, and publishing the project's Docker images. (For ju
 Published images:
 - **Backend** → `dotcoms/supermarket-backend`
 - **Frontend** → `dotcoms/supermarket-frontend`
+- **MCP server** → `dotcoms/supermarket-mcp-server`
+- **AI server** → `dotcoms/supermarket-ai-server`
+
+These names are set by the `image:` lines in `docker-compose.yml`. Every compose command needs `JWT_SECRET` set in a root `.env` file (see `.env.example`).
 
 ## Local Compose Workflow
 
@@ -59,78 +63,30 @@ else. Keep it in `docker-compose.gpu.yml` and opt in per-machine.
 - `:latest` is great for development & quick testing → **never use `:latest` in production deployments**, always prefer explicit version tags (`:v1.2.3`, `:2026-02-03`, etc.)
 - Version tags give you control, rollback capability, and reproducibility — `:latest` can silently break things downstream
 
-## Quick First-Time Push (create repo + initial images)
-
-```bash
-# 1. Build both images
-docker-compose build
-
-# 2. Tag & push backend
-docker tag supermarket-backend dotcoms/supermarket-backend:latest
-docker push    dotcoms/supermarket-backend:latest
-
-# 3. Tag & push frontend
-docker tag supermarket-frontend dotcoms/supermarket-frontend:latest
-docker push    dotcoms/supermarket-frontend:latest
-```
-
-## Normal Update Workflow (after code changes)
+## Push All Images (first time or after code changes)
 
 ```bash
 # Rebuild (only rebuilds what changed — usually fast)
-docker-compose build
+docker compose build
 
-# Push updated :latest tags
-docker push dotcoms/supermarket-backend:latest
-docker push dotcoms/supermarket-frontend:latest
+# List the services: a plain `push` would also try to push the ollama image
+docker compose push backend frontend mcp-server ai-server
 ```
 
 ## Best Practice: Versioned Releases
 
 ```bash
 # After build + testing
-docker tag supermarket-backend   dotcoms/supermarket-backend:v1.2.0
-docker tag supermarket-frontend  dotcoms/supermarket-frontend:v1.2.0
-
-# Push the version tags
-docker push dotcoms/supermarket-backend:v1.2.0
-docker push dotcoms/supermarket-frontend:v1.2.0
-
-# Optional: also refresh :latest
-docker push dotcoms/supermarket-backend:latest
-docker push dotcoms/supermarket-frontend:latest
+VERSION=v1.2.0
+for name in backend frontend mcp-server ai-server; do
+  docker tag  dotcoms/supermarket-$name:latest dotcoms/supermarket-$name:$VERSION
+  docker push dotcoms/supermarket-$name:$VERSION
+done
 ```
 
 ## Pull Example
 
 ```bash
-docker pull dotcoms/supermarket-backend:latest
-docker pull dotcoms/supermarket-frontend:latest
-
-# Then start everything (recommended):
-docker-compose up -d
-```
-
-## Convenience Push Script (optional but handy)
-
-Save as `push.sh`:
-
-```bash
-#!/usr/bin/env bash
-set -euo pipefail
-
-VERSION="${1:-latest}"
-
-echo "→ Building images..."
-docker-compose build
-
-echo "→ Tagging as ${VERSION} ..."
-docker tag supermarket-backend   dotcoms/supermarket-backend:${VERSION}
-docker tag supermarket-frontend  dotcoms/supermarket-frontend:${VERSION}
-
-echo "→ Pushing ${VERSION} ..."
-docker push dotcoms/supermarket-backend:${VERSION}
-docker push dotcoms/supermarket-frontend:${VERSION}
-
-echo "Done → pushed version: ${VERSION}"
+docker compose pull
+docker compose up -d --no-build
 ```
