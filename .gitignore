@@ -1,6 +1,7 @@
 frontend/
 backend/
 .vscode/
+.env
 
 # Standalone repos of their own — not part of this workspace
 mcp-server/
