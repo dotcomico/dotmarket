@@ -9,6 +9,10 @@
 ![SQLite](https://img.shields.io/badge/SQLite-database-07405E?logo=sqlite&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)
 
+<p align="center">
+  <a href="docs/QUICK_START.md"><img src="https://img.shields.io/badge/%F0%9F%9A%80%20Quick%20Start-Run%20the%20full%20app-2ea44f?style=for-the-badge" alt="Quick Start: run the full app" height="40"></a>
+</p>
+
 ---
 
 ## 📸 Preview
@@ -132,7 +136,9 @@ flowchart LR
 
 ## 📚 Documentation
 
-- [Quick Start](docs/QUICK_START.md) — run it locally or via Docker, test credentials, environment variables
+> [!TIP]
+> **Want to try it?** Follow the [**🚀 Quick Start**](docs/QUICK_START.md) to run the whole app with Docker or locally, with test accounts ready to use.
+
 - [API Reference](docs/API_REFERENCE.md) — REST endpoints
 - [Docker Publishing Guide](docs/DOCKER_PUBLISHING.md) — build/tag/push the images (maintainers)
 
