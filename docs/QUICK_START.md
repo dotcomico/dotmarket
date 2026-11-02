@@ -66,7 +66,7 @@ docker compose up -d --build
 
 ### Prerequisites
 
-- Node.js 18+ / npm
+- Node.js 20.19+ or 22.12+ / npm
 - Python 3.11+
 - Git
 
@@ -85,8 +85,10 @@ python -m venv venv
 source venv/bin/activate     # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 
-# Optional: fresh database + test data
-rm database.sqlite           # or supermarket.db – whatever your config uses
+# Create your settings file (login fails without JWT_SECRET)
+cp .env.example .env         # Windows: copy .env.example .env
+
+# Fill the database with test data
 python seed_database.py
 
 # Start backend
@@ -132,14 +134,13 @@ Re-run `pip install -r requirements.txt` / `npm install` only if dependencies ch
 
 ```bash
 cd backend
-rm database.sqlite
-python seed_database.py
+python seed_database.py      # clears existing data first
 ```
 
 Includes:
 - 60 categories (12 parents + subcategories)
-- 62 products (some low/out-of-stock for testing)
-- 5 realistic orders in different states
+- 108 products (some low/out-of-stock for testing)
+- 15 realistic orders in different states
 
 ## Optional: AI Chat Assistant (mcp-server + ai-server)
 
@@ -184,7 +185,7 @@ uvicorn src.api:app --port 8100 --reload
 # 4. Test it end-to-end
 curl -X POST http://127.0.0.1:8100/chat \
   -H "Content-Type: application/json" \
-  -d "{\"message\": \"What products do you have under $5?\"}"
+  -d "{\"message\": \"What products do you have under 5 dollars?\"}"
 # → {"reply": "..."} grounded in real seeded product data
 ```
 
