@@ -193,6 +193,10 @@ Run order matters: backend → mcp-server → ai-server. Each step's README
 with the MCP Inspector and Claude Desktop, which is worth doing before
 wiring the chat widget into the frontend.
 
+To record chats for debugging, set `CHAT_TRACE_ENABLED=true` in `ai-server/.env`,
+or in the root `.env` when running Docker. See "Chat tracing" in
+`ai-server/README.md`.
+
 ## Environment Variables (backend)
 
 | Name         | Description                  | Required? | Default    |

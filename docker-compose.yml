@@ -42,6 +42,9 @@ services:
       - OPENAI_API_KEY=ollama
       - OPENAI_MODEL=qwen2.5:7b
       - MCP_SERVER_URL=http://mcp-server:8000/mcp
+      - CHAT_TRACE_ENABLED=${CHAT_TRACE_ENABLED:-false}
+    volumes:
+      - ./ai-server/logs:/app/logs
     depends_on:
       mcp-server:
         condition: service_started
