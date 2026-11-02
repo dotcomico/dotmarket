@@ -1,6 +1,6 @@
 services:
   backend:
-    image: dotcoms/supermarket-backend:latest
+    image: dotcomico/supermarket-backend:latest
     build: ./backend
     ports:
       - "3000:3000"
@@ -24,7 +24,7 @@ services:
     entrypoint: ["sh", "-c", "until ollama list >/dev/null 2>&1; do sleep 1; done; ollama pull qwen2.5:7b"]
 
   mcp-server:
-    image: dotcoms/supermarket-mcp-server:latest
+    image: dotcomico/supermarket-mcp-server:latest
     build: ./mcp-server
     environment:
       - MCP_HOST=0.0.0.0
@@ -34,7 +34,7 @@ services:
       - backend
 
   ai-server:
-    image: dotcoms/supermarket-ai-server:latest
+    image: dotcomico/supermarket-ai-server:latest
     build: ./ai-server
     environment:
       - AI_SERVER_PORT=8100
@@ -52,7 +52,7 @@ services:
         condition: service_completed_successfully
 
   frontend:
-    image: dotcoms/supermarket-frontend:latest
+    image: dotcomico/supermarket-frontend:latest
     build: ./frontend
     ports:
       - "80:80"

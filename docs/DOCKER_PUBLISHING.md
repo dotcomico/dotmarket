@@ -3,10 +3,10 @@
 Notes for building, running, and publishing the project's Docker images. (For just *running* the app via Docker, see [QUICK_START.md](QUICK_START.md).)
 
 Published images:
-- **Backend** → `dotcoms/supermarket-backend`
-- **Frontend** → `dotcoms/supermarket-frontend`
-- **MCP server** → `dotcoms/supermarket-mcp-server`
-- **AI server** → `dotcoms/supermarket-ai-server`
+- **Backend** → `dotcomico/supermarket-backend`
+- **Frontend** → `dotcomico/supermarket-frontend`
+- **MCP server** → `dotcomico/supermarket-mcp-server`
+- **AI server** → `dotcomico/supermarket-ai-server`
 
 These names are set by the `image:` lines in `docker-compose.yml`. Every compose command needs `JWT_SECRET` set in a root `.env` file (see `.env.example`).
 
@@ -59,7 +59,7 @@ else. Keep it in `docker-compose.gpu.yml` and opt in per-machine.
 ## Publishing Images — Important Notes
 
 - You **must** be logged in → run `docker login` before any `docker push`
-- If you see `denied: requested access to the resource is denied` → you are either not logged in, or you do not have push permission to the `dotcoms` namespace/org
+- If you see `denied: requested access to the resource is denied` → you are either not logged in, or you do not have push permission to the `dotcomico` namespace/org
 - `:latest` is great for development & quick testing → **never use `:latest` in production deployments**, always prefer explicit version tags (`:v1.2.3`, `:2026-02-03`, etc.)
 - Version tags give you control, rollback capability, and reproducibility — `:latest` can silently break things downstream
 
@@ -79,8 +79,8 @@ docker compose push backend frontend mcp-server ai-server
 # After build + testing
 VERSION=v1.2.0
 for name in backend frontend mcp-server ai-server; do
-  docker tag  dotcoms/supermarket-$name:latest dotcoms/supermarket-$name:$VERSION
-  docker push dotcoms/supermarket-$name:$VERSION
+  docker tag  dotcomico/supermarket-$name:latest dotcomico/supermarket-$name:$VERSION
+  docker push dotcomico/supermarket-$name:$VERSION
 done
 ```
 
