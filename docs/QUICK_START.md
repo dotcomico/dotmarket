@@ -160,11 +160,12 @@ git clone https://github.com/dotcomico/dotmarket-ai-server.git ai-server
 
 ```bash
 # 2. mcp-server (needs backend already running — see above)
-cd mcp-server
+cd ../mcp-server
 python -m venv venv
 venv\Scripts\activate        # macOS/Linux: source venv/bin/activate
 pip install -r requirements.txt
-copy .env.example .env       # defaults to http://localhost:3000 for the backend
+copy .env.example .env       # macOS/Linux: cp .env.example .env
+                              # defaults to http://localhost:3000 for the backend
 python -m src.server
 # → listens on http://127.0.0.1:8000/mcp
 ```
@@ -175,8 +176,10 @@ cd ../ai-server
 python -m venv venv
 venv\Scripts\activate        # macOS/Linux: source venv/bin/activate
 pip install -r requirements.txt
-copy .env.example .env       # set OPENAI_API_KEY, or point LLM_BASE_URL at a
-                              # local Ollama server for free local dev
+copy .env.example .env       # macOS/Linux: cp .env.example .env
+                              # set OPENAI_API_KEY, or for free local dev point
+                              # LLM_BASE_URL at Ollama (http://localhost:11434/v1)
+                              # and set OPENAI_MODEL=qwen2.5:7b
 uvicorn src.api:app --port 8100 --reload
 # → http://127.0.0.1:8100
 ```
@@ -189,10 +192,10 @@ curl -X POST http://127.0.0.1:8100/chat \
 # → {"reply": "..."} grounded in real seeded product data
 ```
 
-Run order matters: backend → mcp-server → ai-server. Each step's README
-(`mcp-server/README.md`, `ai-server/README.md`) also covers manual testing
-with the MCP Inspector and Claude Desktop, which is worth doing before
-wiring the chat widget into the frontend.
+Run order matters: backend → mcp-server → ai-server. Once ai-server is up,
+the storefront's chat widget works too: the Vite dev server proxies `/ai`
+to port 8100. `mcp-server/README.md` covers calling the tools by hand with
+the MCP Inspector, and `ai-server/README.md` covers the loop's smoke tests.
 
 To record chats for debugging, set `CHAT_TRACE_ENABLED=true` in `ai-server/.env`,
 or in the root `.env` when running Docker. See "Chat tracing" in
